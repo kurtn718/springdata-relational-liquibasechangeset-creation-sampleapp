@@ -1,0 +1,28 @@
+databaseChangeLog:
+- changeSet:
+    id: '1683768522691'
+    author: Spring Data JDBC
+    objectQuotingStrategy: LEGACY
+    changes:
+    - createTable:
+        columns:
+        - column:
+            name: first_name
+            type: VARCHAR(255)
+        - column:
+            name: last_name
+            type: VARCHAR(255)
+        tableName: student
+    - dropTable:
+        cascadeConstraints: true
+        schemaName: test
+        tableName: DATABASECHANGELOGLOCK
+    - dropTable:
+        cascadeConstraints: true
+        schemaName: test
+        tableName: student
+    - dropTable:
+        cascadeConstraints: true
+        schemaName: test
+        tableName: DATABASECHANGELOG
+
