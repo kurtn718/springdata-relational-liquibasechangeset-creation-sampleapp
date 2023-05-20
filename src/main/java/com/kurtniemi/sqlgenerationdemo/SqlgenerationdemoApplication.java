@@ -10,7 +10,9 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
+import org.springframework.context.annotation.Profile;
 import org.springframework.data.jdbc.core.mapping.JdbcMappingContext;
+import org.springframework.data.relational.core.dialect.Dialect;
 import org.springframework.data.relational.core.mapping.schemasqlgeneration.ColumnModel;
 import org.springframework.data.relational.core.mapping.schemasqlgeneration.SchemaSQLGenerationDataModel;
 import org.springframework.data.relational.core.mapping.schemasqlgeneration.TableModel;
@@ -19,6 +21,7 @@ import javax.sql.DataSource;
 import java.util.List;
 
 @SpringBootApplication
+@Profile("generatesql")
 public class SqlgenerationdemoApplication implements CommandLineRunner, ApplicationContextAware {
 
 	private ApplicationContext applicationContext;
@@ -35,6 +38,9 @@ public class SqlgenerationdemoApplication implements CommandLineRunner, Applicat
 		// (i.e. a method that takes in a RelationalContext and a Datasource class)
 		Database database = new SQLiteDatabase();
 		JdbcMappingContext context = (JdbcMappingContext) applicationContext.getBean(JdbcMappingContext.class);
+		Dialect dialect = (Dialect)applicationContext.getBean(Dialect.class);
+
+
 		DataSource dataSource = applicationContext.getBean(DataSource.class);
 		DatabaseConnection databaseConnection = new JdbcConnection(dataSource.getConnection());
 		database.setConnection(databaseConnection);
@@ -44,7 +50,18 @@ public class SqlgenerationdemoApplication implements CommandLineRunner, Applicat
 
 		// Pass in Liquibase database and output file
 		String outputFileName = "./changeset.yml";
+
+
+		// false - do not drop
 		model.generateLiquibaseChangeset(database, outputFileName);
+
+		//model.applyChangeSet(); // Add tables automatically
+
+		// Generate a change-set for starting from scratch
+			// Allow for dropping tables that WE created -  only in this case.
+			// A table that we created would have been added in a changeset
+
+		// Directly apply changes
 
 		// We know what we should have...
 /*		List<TableModel> tables = model.getTableData();
