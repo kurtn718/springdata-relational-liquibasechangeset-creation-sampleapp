@@ -13,9 +13,8 @@ import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.annotation.Profile;
 import org.springframework.data.jdbc.core.mapping.JdbcMappingContext;
 import org.springframework.data.relational.core.dialect.Dialect;
-import org.springframework.data.relational.core.mapping.schemasqlgeneration.ColumnModel;
-import org.springframework.data.relational.core.mapping.schemasqlgeneration.SchemaSQLGenerationDataModel;
-import org.springframework.data.relational.core.mapping.schemasqlgeneration.TableModel;
+import org.springframework.data.relational.core.mapping.schemasqlgeneration.LiquibaseChangeSetGenerator;
+import org.springframework.data.relational.core.mapping.schemasqlgeneration.SchemaModel;
 
 import javax.sql.DataSource;
 import java.util.List;
@@ -46,14 +45,16 @@ public class SqlgenerationdemoApplication implements CommandLineRunner, Applicat
 		database.setConnection(databaseConnection);
 
 		// Create Model class
-		SchemaSQLGenerationDataModel model = new SchemaSQLGenerationDataModel(context);
+		SchemaModel model = new SchemaModel(context);
 
 		// Pass in Liquibase database and output file
 		String outputFileName = "./changeset.yml";
 
+		LiquibaseChangeSetGenerator liquibaseChangeSetGenerator = new LiquibaseChangeSetGenerator(model, database);
+
 
 		// false - do not drop
-		model.generateLiquibaseChangeset(database, outputFileName);
+		liquibaseChangeSetGenerator.generateLiquibaseChangeset(outputFileName);
 
 		//model.applyChangeSet(); // Add tables automatically
 
