@@ -19,6 +19,8 @@ public class Student {
     @Column
     private String lastName;
 
+    String middleName;
+
     private Set<CourseRef> courses = new HashSet<>();
 
 
