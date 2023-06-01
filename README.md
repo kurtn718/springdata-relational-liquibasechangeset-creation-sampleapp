@@ -2,7 +2,7 @@
 
 This project contains a sample application to generate Liquibase changesets using Spring Data JDBC.   
 
-The example code is here: [a relative link](src/main/java/kurtniemi/liquibasechangesetdemo/LiquibaseChangeSetWriterApplication.java)
+The example code is here: [LiquibaseChangeSetWriterApplication](src/main/java/kurtniemi/liquibasechangesetdemo/app/LiquibaseChangeSetWriterApplication.java)
 
 Pre-requisites beyond typical Spring Data JDBC setup
 
