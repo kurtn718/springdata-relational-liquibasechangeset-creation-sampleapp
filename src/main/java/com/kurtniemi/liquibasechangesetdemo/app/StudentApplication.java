@@ -1,8 +1,7 @@
-package com.kurtniemi.sqlgenerationdemo;
+package com.kurtniemi.liquibasechangesetdemo.app;
 
-import com.kurtniemi.sqlgenerationdemo.entities.Course;
-import com.kurtniemi.sqlgenerationdemo.entities.Student;
-import com.kurtniemi.sqlgenerationdemo.repositories.CourseRepository;
+import com.kurtniemi.liquibasechangesetdemo.entities.Student;
+import com.kurtniemi.liquibasechangesetdemo.service.StudentService;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -31,10 +30,6 @@ public class StudentApplication implements CommandLineRunner, ApplicationContext
         student.setFirstName("Test");
         student.setLastName("Student");
         service.addStudent(student);
-
-        Course course = new Course();
-        course.setName("Basket Weaver");
-        course.setInstructor("TBD");
     }
 
     @Override

@@ -1,7 +1,6 @@
-package com.kurtniemi.sqlgenerationdemo.entities;
+package com.kurtniemi.liquibasechangesetdemo.entities;
 
 import org.springframework.data.annotation.Id;
-import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;
 
 import java.util.HashSet;
@@ -10,18 +9,14 @@ import java.util.Set;
 @Table
 public class Student {
     @Id
-    @Column
     private Long id;
 
-    @Column
     private String firstName;
 
-    @Column
+    private String middleName;
     private String lastName;
 
-    String middleName;
-
-    private Set<CourseRef> courses = new HashSet<>();
+    private Set<StudentCourse> courses = new HashSet<>();
 
 
     public Long getId() {

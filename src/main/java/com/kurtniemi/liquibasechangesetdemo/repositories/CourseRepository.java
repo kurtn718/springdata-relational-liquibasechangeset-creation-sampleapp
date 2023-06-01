@@ -1,7 +1,6 @@
-package com.kurtniemi.sqlgenerationdemo.repositories;
+package com.kurtniemi.liquibasechangesetdemo.repositories;
 
-import com.kurtniemi.sqlgenerationdemo.entities.Course;
-import org.springframework.data.relational.core.mapping.Table;
+import com.kurtniemi.liquibasechangesetdemo.entities.Course;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 

@@ -1,10 +1,10 @@
-package com.kurtniemi.sqlgenerationdemo;
+package com.kurtniemi.liquibasechangesetdemo;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class SqlgenerationdemoApplicationTests {
+class LiquibaseChangeSetWriterApplicationTests {
 
 	@Test
 	void contextLoads() {

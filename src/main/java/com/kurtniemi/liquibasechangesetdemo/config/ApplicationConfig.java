@@ -1,4 +1,4 @@
-package com.kurtniemi.sqlgenerationdemo;
+package com.kurtniemi.liquibasechangesetdemo.config;
 
 import com.mysql.cj.jdbc.MysqlDataSource;
 import org.springframework.context.annotation.Bean;
@@ -20,5 +20,4 @@ public class ApplicationConfig {
 
         return dataSource;
     }
-
 }

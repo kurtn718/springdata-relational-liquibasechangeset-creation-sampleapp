@@ -1,4 +1,4 @@
-package com.kurtniemi.sqlgenerationdemo.entities;
+package com.kurtniemi.liquibasechangesetdemo.entities;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Column;
