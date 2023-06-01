@@ -1,4 +1,4 @@
-# springdata-relational-liquibasechangeset-creation-sampleapp
+# How to generate Liquibase changesets using Spring Data JDBC.   
 
 This project contains a sample application to generate Liquibase changesets using Spring Data JDBC.   
 
