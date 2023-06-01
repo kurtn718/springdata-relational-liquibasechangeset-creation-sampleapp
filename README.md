@@ -2,13 +2,12 @@
 
 This project contains a sample application to generate Liquibase changesets using Spring Data JDBC.   
 
-The example code is here: [LiquibaseChangeSetWriterApplication](https://github.com/kurtn718/springdata-relational-liquibasechangeset-creation-sampleapp/blob/main/src/main/java/com/kurtniemi/liquibasechangesetdemo/app/LiquibaseChangeSetWriterApplication.java)
+Example code is here: [LiquibaseChangeSetWriterApplication](https://github.com/kurtn718/springdata-relational-liquibasechangeset-creation-sampleapp/blob/main/src/main/java/com/kurtniemi/liquibasechangesetdemo/app/LiquibaseChangeSetWriterApplication.java)
 
-Pre-requisites beyond typical Spring Data JDBC setup
+Steps assuming you have an existing Spring Data JDBC application:
 
 1) Add Liquibase to your POM file
 
-Demo of SQL Generation for Spring Data JDBC
 
 ```
 		<dependency>
@@ -18,9 +17,33 @@ Demo of SQL Generation for Spring Data JDBC
 		</dependency>
 ```
 
-2) Implement an application similar to the example code.   
+2) Get the JdbcMappingContext bean from your application context, and then create a MappedTables object
 
-Best practice tip:  Make the application use a different Spring Profile.  
+```
+		JdbcMappingContext context = (JdbcMappingContext) applicationContext.getBean(JdbcMappingContext.class);
+		MappedTables sourceModel = new MappedTables(context);
+```
+
+3) Optional:  If generating a changeset against an existing database - create a Liquibase Database object as follows:
+
+```
+		DataSource dataSource = applicationContext.getBean(DataSource.class);
+		DatabaseConnection databaseConnection = new JdbcConnection(dataSource.getConnection());
+
+		Database database = new SQLiteDatabase();
+		database.setConnection(databaseConnection);
+```
+Replace SQLiteDatabase with the type of your database (i.e. OracleDatabase if using Oracle).     
+
+4) Create a LiquibaseChangeSetWriter object passing in the MappedTables and Liquibase Database object
+
+```		LiquibaseChangeSetWriter changeSetWriter = new LiquibaseChangeSetWriter(sourceModel, database);
+		outputFileResource = new FileSystemResource( "changeset.yml");
+		changeSetWriter.writeChangeSet(outputFileResource);
+```
+Note: If not generating against an existing database use the contructor that just takes in a MappedTables object
+
+5) Best practice tip:  Put the above code in a Spring Boot application and have it on a separate Sprint Profile (that is different than your main application)
 
 Even though generating a Liquibase changeset is not a destructive operation, having it on a separate Spring profile means it will not run when running
 your main application.   
