@@ -10,36 +10,37 @@ Steps assuming you have an existing Spring Data JDBC application:
 
 
 ```
-		<dependency>
-			<groupId>org.liquibase</groupId>
-			<artifactId>liquibase-core</artifactId>
-			<version>4.21.1</version>
-		</dependency>
+<dependency>
+	<groupId>org.liquibase</groupId>
+	<artifactId>liquibase-core</artifactId>
+	<version>4.21.1</version>
+</dependency>
 ```
 
 2) Get the JdbcMappingContext bean from your application context, and then create a MappedTables object
 
 ```
-		JdbcMappingContext context = (JdbcMappingContext) applicationContext.getBean(JdbcMappingContext.class);
-		MappedTables sourceModel = new MappedTables(context);
+JdbcMappingContext context = (JdbcMappingContext) applicationContext.getBean(JdbcMappingContext.class);
+MappedTables sourceModel = new MappedTables(context);
 ```
 
 3) Optional:  If generating a changeset against an existing database - create a Liquibase Database object as follows:
 
 ```
-		DataSource dataSource = applicationContext.getBean(DataSource.class);
-		DatabaseConnection databaseConnection = new JdbcConnection(dataSource.getConnection());
+DataSource dataSource = applicationContext.getBean(DataSource.class);
+DatabaseConnection databaseConnection = new JdbcConnection(dataSource.getConnection());
 
-		Database database = new SQLiteDatabase();
-		database.setConnection(databaseConnection);
+Database database = new SQLiteDatabase();
+database.setConnection(databaseConnection);
 ```
 Replace SQLiteDatabase with the type of your database (i.e. OracleDatabase if using Oracle).   Any database that is supported by Liquibase can be used.  
 
 4) Create a LiquibaseChangeSetWriter object passing in the MappedTables and Liquibase Database object
 
-```		LiquibaseChangeSetWriter changeSetWriter = new LiquibaseChangeSetWriter(sourceModel, database);
-		outputFileResource = new FileSystemResource( "changeset.yml");
-		changeSetWriter.writeChangeSet(outputFileResource);
+```
+LiquibaseChangeSetWriter changeSetWriter = new LiquibaseChangeSetWriter(sourceModel, database);
+outputFileResource = new FileSystemResource( "changeset.yml");
+changeSetWriter.writeChangeSet(outputFileResource);
 ```
 Note: If not generating against an existing database use the contructor that just takes in a MappedTables object
 
