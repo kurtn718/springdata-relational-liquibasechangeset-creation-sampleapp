@@ -33,7 +33,7 @@ Steps assuming you have an existing Spring Data JDBC application:
 		Database database = new SQLiteDatabase();
 		database.setConnection(databaseConnection);
 ```
-Replace SQLiteDatabase with the type of your database (i.e. OracleDatabase if using Oracle).     
+Replace SQLiteDatabase with the type of your database (i.e. OracleDatabase if using Oracle).   Any database that is supported by Liquibase can be used.  
 
 4) Create a LiquibaseChangeSetWriter object passing in the MappedTables and Liquibase Database object
 
